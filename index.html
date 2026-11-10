@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aler — Presentación Gamer & BoyWithUke</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    /* ====== VARIABLES MODO OSCURO ====== */
+    :root {
+      --bg-dark: #060714;
+      --bg-panel: #0f1226;
+      --bg-card: #141834;
+      --neon-purple: #b23aff;
+      --neon-blue: #00d2ff;
+      --neon-green: #00ff88;
+      --neon-red: #ff3366;
+      --neon-yellow: #ffcc00;
+      --text-main: #ffffff;
+      --text-muted: #8b92b6;
+      --border-color: #2a2e54;
+      --font-title: 'Orbitron', sans-serif;
+      --font-body: 'Rajdhani', sans-serif;
+    }
+
+    /* ====== VARIABLES MODO CLARO ====== */
+    body.light-mode {
+      --bg-dark: #eef2ff;
+      --bg-panel: #ffffff;
+      --bg-card: #f8fafc;
+      --text-main: #111827;
+      --text-muted: #475569;
+      --border-color: #cbd5e1;
+      color-scheme: light;
+    }
+
+    body:not(.light-mode) { color-scheme: dark; }
+    body.light-mode .hero,
+    body.light-mode .sidebar-panel,
+    body.light-mode .section {
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+    body.light-mode .promo-marquee span:nth-child(even) { color: #9a6700; }
+    body.light-mode .alerta--success { color: #087443; }
+    body.light-mode .alerta--error { color: #b42345; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 30px;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 100;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .header__promo-ad {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 204, 0, 0.1);
+      border: 1px solid var(--neon-yellow);
+      padding: 6px 12px;
+      border-radius: 20px;
+      max-width: 350px;
+      overflow: hidden;
+    }
+    .promo-marquee { display: flex; white-space: nowrap; animation: marquee 10s linear infinite; }
+    .promo-marquee span {
+      color: var(--text-main); font-weight: 700; font-size: 0.85rem; padding-right: 30px;
+      font-family: var(--font-title); letter-spacing: 1px;
+    }
+    .promo-marquee span:nth-child(even) { color: var(--neon-yellow); }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* Logo */
+    .header__logo {
+      font-family: var(--font-title);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px var(--neon-blue);
+    }
+    .header__logo span { color: var(--neon-blue); }
+
+    /* BOTÓN FLOTANTE FIJO (Siempre visible abajo a la derecha) */
+    .floating-theme-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(90deg, var(--neon-purple), #8a2be2);
+      border: 2px solid var(--neon-purple);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-family: var(--font-title);
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 0 20px rgba(178, 58, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+    .floating-theme-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(178, 58, 255, 0.8);
+    }
+
+    /* MAIN CONTAINER */
+    .main-container {
+      display: flex; flex: 1; padding: 15px 30px; gap: 15px; 
+      position: relative; justify-content: center; max-width: 1400px; margin: 0 auto; width: 100%;
+      padding-bottom: 80px; flex-direction: column;
+    }
+
+    /* BLOQUE SUPERIOR */
+    .top-layout {
+      display: flex;
+      gap: 6px;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    /* HERO */
+    .hero {
+      flex: 1; 
+      background: var(--bg-panel); border: 2px solid var(--neon-purple);
+      border-radius: 16px 0 0 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: -10px 0 30px rgba(178, 58, 255, 0.1);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .hero h1 {
+      font-family: var(--font-title); font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      color: var(--text-main); margin-bottom: 10px; line-height: 1.2;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: var(--text-muted); font-size: 0.9rem; max-width: 500px; margin: 0 auto; line-height: 1.3; }
+
+    /* SIDEBAR DERECHA (Sobre mí) */
+    .right-sidebar { width: 280px; flex-shrink: 0; display: flex; }
+    .sidebar-panel { 
+      background: var(--bg-panel); 
+      border: 1px solid var(--border-color); 
+      border-left: 2px solid var(--neon-purple);
+      border-radius: 0 16px 16px 0; 
+      padding: 16px;
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px;
+      width: 100%; 
+    }
+    .sidebar-title { 
+      font-family: var(--font-title); 
+      font-size: 0.9rem;
+      color: var(--neon-blue); 
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
+      border-bottom: 1px solid var(--border-color); 
+      padding-bottom: 8px; 
+    }
+    .sidebar-panel .promo-item { padding: 8px; border-radius: 8px; }
+    .sidebar-panel .promo-item h4 { font-size: 0.8rem; margin-bottom: 2px; display: flex; align-items: center; gap: 4px; color: var(--text-main); }
+    .sidebar-panel .promo-item p { font-size: 0.75rem; line-height: 1.2; color: var(--text-muted); }
+
+    /* CONTENIDO CENTRAL */
+    .center-content { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+    .sections-wrapper { display: flex; flex-direction: column; gap: 15px; width: 100%; transition: all 0.4s ease;}
+
+    .section {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px;
+      transition: all 0.4s ease;
+      min-height: 90px; 
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .section.is-expanded { width: 100%; flex: 1 1 100%; }
+    .section.is-hidden { display: none; }
+
+    .section__head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .section__title { font-family: var(--font-title); font-size: 1.05rem; color: var(--neon-blue); }
+    .section__subtitle { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px; }
+
+    .section-toggle {
+      display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
+      border-radius: 999px; border: 2px solid var(--neon-blue); background: transparent;
+      color: var(--neon-blue); font-family: var(--font-title); font-weight: 600;
+      font-size: 0.8rem; cursor: pointer; transition: all 0.3s;
+      align-self: flex-start;
+    }
+    .section-toggle:hover { background: var(--neon-blue); color: #fff; }
+    .section-toggle[aria-expanded="true"] { background: var(--neon-blue); color: #fff; }
+    .section-toggle .arrow { display: inline-block; transition: transform 0.3s; }
+    .section-toggle[aria-expanded="true"] .arrow { transform: rotate(90deg); }
+
+    .section-body { display: none; width: 100%; margin-top: 12px; }
+    .section-body.show { display: block; animation: slideHorizontal 0.4s ease; }
+    @keyframes slideHorizontal { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* FILTROS */
+    .filter-block { margin-bottom: 12px; }
+    .filter-block__label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+    .filter-btn {
+      padding: 4px 12px; border-radius: 999px; border: 1px solid var(--border-color);
+      background: var(--bg-card); color: var(--text-muted); font-weight: 600;
+      font-size: 0.75rem; cursor: pointer; transition: all 0.3s;
+    }
+    .filter-btn:hover { border-color: var(--neon-blue); color: var(--text-main); }
+    .filter-btn.is-active { background: var(--neon-purple); border-color: var(--neon-purple); color: #fff; box-shadow: 0 0 10px rgba(178, 58, 255, 0.4); }
+
+    /* GRID HORIZONTAL */
+    .grid { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; width: 100%; }
+    .card {
+      flex: 1 1 180px; min-width: 160px; max-width: 100%;
+      background: var(--bg-card); border: 2px solid var(--border-color);
+      border-left: 4px solid var(--neon-purple); border-radius: 12px;
+      padding: 12px; transition: all 0.3s;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(178, 58, 255, 0.2); border-color: var(--neon-purple); }
+    .card__badge { display: inline-block; font-size: 0.6rem; font-weight: 700; color: #fff; background: var(--neon-purple); padding: 2px 8px; border-radius: 999px; margin-bottom: 8px; font-family: var(--font-title); }
+    .card__title { font-family: var(--font-title); font-size: 0.9rem; color: var(--text-main); margin-bottom: 4px; }
+    .card__text { color: var(--text-muted); font-size: 0.8rem; }
+
+    /* FORMULARIO */
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+    .form-group label { font-weight: 600; color: var(--text-muted); font-size: 0.85rem; }
+    .form-group input, .form-group textarea {
+      background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main);
+      padding: 10px; border-radius: 8px; font-family: var(--font-body); font-size: 0.9rem; outline: none; resize: vertical; transition: all 0.3s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 210, 255, 0.3); }
+    .field-error { font-size: 0.7rem; color: var(--neon-red); min-height: 1em; font-weight: 600; }
+    .alerta-box:empty { display: none; }
+    .alerta { padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; animation: fadeIn 0.3s ease; }
+    .alerta--error { background: rgba(255, 51, 102, 0.15); border: 1px solid var(--neon-red); color: var(--neon-red); }
+    .alerta--success { background: rgba(0, 255, 136, 0.15); border: 1px solid var(--neon-green); color: var(--neon-green); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+    .btn-confirm {
+      background: linear-gradient(90deg, var(--neon-purple), #8a2be2); border: none; color: #fff;
+      padding: 12px; border-radius: 10px; font-family: var(--font-title); font-weight: 700;
+      font-size: 0.9rem; cursor: pointer; transition: all 0.3s; display: flex;
+      align-items: center; justify-content: center; gap: 8px; width: 100%;
+    }
+    .btn-confirm:hover { box-shadow: 0 0 20px var(--neon-purple); transform: scale(1.01); }
+
+    .socials { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .social-link {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+      border-radius: 999px; border: 1px solid var(--border-color); background: var(--bg-card);
+      font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-decoration: none; transition: all 0.3s;
+    }
+    .social-link:hover { border-color: var(--neon-blue); color: var(--neon-blue); transform: translateY(-2px); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
+    .social-link svg { width: 14px; height: 14px; fill: currentColor; }
+
+    /* ESTADO EXPANDIDO */
+    .main-container.is-expanded-mode .top-layout { display: none; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .header { flex-wrap: wrap; gap: 10px; justify-content: space-between; }
+      .header__promo-ad { max-width: 200px; }
+      
+      .top-layout { flex-direction: column; gap: 15px; }
+      .hero { border-radius: 16px; }
+      .right-sidebar { width: 100%; }
+      .sidebar-panel { border-radius: 16px; border-left: 1px solid var(--border-color); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__promo-ad">
+      <div class="promo-marquee">
+        <span>ALER GAMER</span>
+        <span>BOYWITHUKE FAN</span>
+        <span>ALER GAMER</span>
+        <span>BOYWITHUKE FAN</span>
+      </div>
+    </div>
+
+    <div class="header__logo">
+      Aler<span>Peña</span>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <div class="main-container" id="mainContainer">
+
+    <main class="center-content">
+
+      <!-- LAYOUT SUPERIOR -->
+      <div class="top-layout">
+        
+        <!-- HERO -->
+        <section class="hero" id="inicio">
+          <h1>Presentación de <span class="highlight">aler</span></h1>
+          <p>Soy <strong>Aler</strong>: estudiante, gamer y fan de <strong>BoyWithUke</strong>. Aquí verás mis juegos favoritos, la música que escucho y cómo contactarme.</p>
+        </section>
+
+        <!-- SIDEBAR DERECHA (Sobre mí) -->
+        <aside class="right-sidebar">
+          <div class="sidebar-panel">
+            <div class="sidebar-title">
+              <i class="fa-solid fa-user-astronaut"></i> Sobre mí
+            </div>
+            <div class="promo-item">
+              <h4><i class="fa-solid fa-school"></i> Estudiante</h4>
+              <p>De día estudio, de noche juego. Siempre con música.</p>
+            </div>
+            <div class="promo-item">
+              <h4><i class="fa-solid fa-gamepad"></i> Gamer</h4>
+              <p>Fan de Red Dead Redemption, COD MW y Minecraft.</p>
+            </div>
+            <div class="promo-item">
+              <h4><i class="fa-solid fa-music"></i> BoyWithUke</h4>
+              <p>Toxic, IDGAF, Two Moons. Su estilo me representa.</p>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- SECCIONES DESPLEGABLES -->
+      <div class="sections-wrapper">
+        
+        <!-- JUEGOS -->
+        <section class="section" id="juegos">
+          <div class="section__head">
+            <h2 class="section__title"><i class="fa-solid fa-gamepad"></i> Juegos favoritos</h2>
+          </div>
+          <p class="section__subtitle">Pulsa el botón para desplegar las tarjetas en horizontal.</p>
+
+          <button class="section-toggle" data-target="juegosBody" data-label="Mostrar juegos" aria-expanded="false">
+            Mostrar juegos <span class="arrow">▸</span>
+          </button>
+
+          <div class="section-body" id="juegosBody">
+            <div class="filter-block">
+              <p class="filter-block__label">Género</p>
+              <div class="filters" data-group="juegos" role="group">
+                <button class="filter-btn is-active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="accion">Acción</button>
+                <button class="filter-btn" data-filter="rpg">RPG</button>
+                <button class="filter-btn" data-filter="familiar">Familiar</button>
+                <button class="filter-btn" data-filter="shooter">Shooter</button>
+                <button class="filter-btn" data-filter="aventura">Aventura</button>
+              </div>
+            </div>
+
+            <div class="grid" id="juegosGrid">
+              <article class="card" data-categoria="accion">
+                <span class="card__badge">Acción</span>
+                <h3 class="card__title">Minecraft</h3>
+                <p class="card__text">Creatividad infinita y aventuras con amigos.</p>
+              </article>
+              <article class="card" data-categoria="rpg">
+                <span class="card__badge">RPG</span>
+                <h3 class="card__title">The Legend of Zelda</h3>
+                <p class="card__text">Exploración, puzzles y una historia épica.</p>
+              </article>
+              <article class="card" data-categoria="accion">
+                <span class="card__badge">Acción</span>
+                <h3 class="card__title">Super Smash Bros.</h3>
+                <p class="card__text">El mejor para jugar con amigos en casa.</p>
+              </article>
+              <article class="card" data-categoria="familiar">
+                <span class="card__badge">Familiar</span>
+                <h3 class="card__title">Mario Kart</h3>
+                <p class="card__text">Carreras caóticas y divertidas.</p>
+              </article>
+              <article class="card" data-categoria="rpg">
+                <span class="card__badge">RPG</span>
+                <h3 class="card__title">Pokémon</h3>
+                <p class="card__text">Coleccionar y combatir con mis favoritos.</p>
+              </article>
+              <article class="card" data-categoria="familiar">
+                <span class="card__badge">Familiar</span>
+                <h3 class="card__title">Stardew Valley</h3>
+                <p class="card__text">Relajarme en la granja después de clases.</p>
+              </article>
+              <article class="card" data-categoria="aventura">
+                <span class="card__badge">Aventura</span>
+                <h3 class="card__title">Red Dead Redemption</h3>
+                <p class="card__text">El western definitivo: historia, mundo abierto y libertad total.</p>
+              </article>
+              <article class="card" data-categoria="shooter">
+                <span class="card__badge">Shooter</span>
+                <h3 class="card__title">Call of Duty: Modern Warfare (trilogía original)</h3>
+                <p class="card__text">MW, MW2 y MW3: campañas icónicas y multijugador clásico.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- MÚSICA -->
+        <section class="section" id="musica">
+          <div class="section__head">
+            <h2 class="section__title"><i class="fa-solid fa-music"></i> Música de BoyWithUke</h2>
+          </div>
+          <p class="section__subtitle">Pulsa el botón para desplegar las tarjetas en horizontal.</p>
+
+          <button class="section-toggle" data-target="musicaBody" data-label="Mostrar música" aria-expanded="false">
+            Mostrar música <span class="arrow">▸</span>
+          </button>
+
+          <div class="section-body" id="musicaBody">
+            <div class="filter-block">
+              <p class="filter-block__label">Artista</p>
+              <div class="filters" data-group="musica" role="group">
+                <button class="filter-btn is-active" data-filter="todos">Todas</button>
+                <button class="filter-btn" data-filter="boywithuke">BoyWithUke</button>
+                <button class="filter-btn" data-filter="otros">Otros</button>
+              </div>
+            </div>
+
+            <div class="grid" id="musicaGrid">
+              <article class="card" data-categoria="boywithuke">
+                <span class="card__badge">BoyWithUke</span>
+                <h3 class="card__title">Toxic</h3>
+                <p class="card__text">La canción que me enganchó a su estilo.</p>
+              </article>
+              <article class="card" data-categoria="boywithuke">
+                <span class="card__badge">BoyWithUke</span>
+                <h3 class="card__title">IDGAF</h3>
+                <p class="card__text">Para cuando necesito desconectar.</p>
+              </article>
+              <article class="card" data-categoria="boywithuke">
+                <span class="card__badge">BoyWithUke</span>
+                <h3 class="card__title">Two Moons</h3>
+                <p class="card__text">Melodía relajada y letra que se queda.</p>
+              </article>
+              <article class="card" data-categoria="boywithuke">
+                <span class="card__badge">BoyWithUke</span>
+                <h3 class="card__title">Long Drives</h3>
+                <p class="card__text">Perfecta para estudiar o jugar.</p>
+              </article>
+              <article class="card" data-categoria="boywithuke">
+                <span class="card__badge">BoyWithUke</span>
+                <h3 class="card__title">Understand</h3>
+                <p class="card__text">Una de mis favoritas del álbum Serotonin Dreams.</p>
+              </article>
+              <article class="card" data-categoria="otros">
+                <span class="card__badge">Otros</span>
+                <h3 class="card__title">BoyWithUke — Prairies</h3>
+                <p class="card__text">Para los días tranquilos.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section class="section" id="contacto">
+          <div class="section__head">
+            <h2 class="section__title"><i class="fa-solid fa-envelope"></i> Contacto</h2>
+          </div>
+          <p class="section__subtitle">Pulsa el botón para desplegar el formulario.</p>
+
+          <button class="section-toggle" data-target="contactoBody" data-label="Mostrar contacto" aria-expanded="false">
+            Mostrar contacto <span class="arrow">▸</span>
+          </button>
+
+          <div class="section-body" id="contactoBody">
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" placeholder="Tu nombre" />
+                <span class="field-error" id="errorName"></span>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="tu@email.com" />
+                <span class="field-error" id="errorEmail"></span>
+              </div>
+              <div class="form-group">
+                <label for="message">Mensaje</label>
+                <textarea id="message" rows="3" placeholder="Cuéntame algo..."></textarea>
+                <span class="field-error" id="errorMessage"></span>
+              </div>
+              <button type="submit" class="btn-confirm"><i class="fa-solid fa-paper-plane"></i> Enviar mensaje</button>
+              <div class="alerta-box" id="alertaBox" role="status" aria-live="polite"></div>
+            </form>
+
+            <div class="socials">
+              <a class="social-link" href="https://www.instagram.com/boywithuke/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.5-2.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
+                IG
+              </a>
+              <a class="social-link" href="https://www.tiktok.com/@boywithuke" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M16.5 3c.3 1.9 1.4 3.4 3.3 3.9v2.7c-1.2 0-2.3-.4-3.3-1v6.7a5.9 5.9 0 1 1-5.9-5.9c.3 0 .6 0 .9.1v2.8a3.1 3.1 0 1 0 2.2 3V3h2.8z"/></svg>
+                TikTok
+              </a>
+              <a class="social-link" href="https://x.com/boywithuke" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.6l-5.1-6.7L5.5 22H2.4l7.2-8.3L1 2h6.7l4.7 6.2L18.9 2zm-1.2 18h1.8L7.4 3.9H5.5L17.7 20z"/></svg>
+                X
+              </a>
+              <a class="social-link" href="https://www.youtube.com/@boywithuke" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M23 12s0-3.6-.5-5.3a2.8 2.8 0 0 0-2-2C18.8 4.2 12 4.2 12 4.2s-6.8 0-8.5.5a2.8 2.8 0 0 0-2 2C1 8.4 1 12 1 12s0 3.6.5 5.3a2.8 2.8 0 0 0 2 2c1.7.5 8.5.5 8.5.5s6.8 0 8.5-.5a2.8 2.8 0 0 0 2-2C23 15.6 23 12 23 12zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg>
+                YouTube
+              </a>
+              <a class="social-link" href="https://open.spotify.com/artist/6U7p8Dv9K8k2vF2c3Jk3wI" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.8.8 0 0 1-1.1.3c-3-1.8-6.7-2.2-11-1.2a.8.8 0 1 1-.3-1.6c4.7-1 8.9-.6 12.2 1.4.4.2.5.7.2 1.1zm1.2-2.7a1 1 0 0 1-1.3.3c-3.4-2-8.6-2.6-12.6-1.4a1 1 0 1 1-.6-1.9c4.6-1.4 10.3-.7 14.2 1.6.5.3.6.9.3 1.4zm.1-2.8C14.1 8.7 7.8 8.4 4.1 9.6a1.2 1.2 0 1 1-.7-2.3c4.2-1.3 11.2-1 15.7 1.6a1.2 1.2 0 0 1-1.2 2z"/></svg>
+                Spotify
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- BOTÓN FLOTANTE FIJO -->
+  <button class="floating-theme-btn" id="themeToggle">
+    <i class="fa-solid fa-sun"></i> <span>Modo Claro</span>
+  </button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      "use strict";
+
+      const mainContainer = document.getElementById("mainContainer");
+      const themeToggleBtn = document.getElementById("themeToggle");
+
+      /* LÓGICA DEL TEMA CLARO / OSCURO */
+      const applyTheme = (theme) => {
+        const isLight = theme === "light";
+        document.body.classList.toggle("light-mode", isLight);
+        themeToggleBtn.innerHTML = isLight
+          ? '<i class="fa-solid fa-moon" aria-hidden="true"></i> <span>Modo Oscuro</span>'
+          : '<i class="fa-solid fa-sun" aria-hidden="true"></i> <span>Modo Claro</span>';
+        themeToggleBtn.setAttribute("aria-label", isLight ? "Cambiar a modo oscuro" : "Cambiar a modo claro");
+        try { localStorage.setItem("theme", isLight ? "light" : "dark"); } catch (error) {
+          console.warn("No se pudo guardar la preferencia del tema.", error);
+        }
+      };
+
+      let savedTheme = "dark";
+      try { savedTheme = localStorage.getItem("theme") || "dark"; } catch (error) {
+        console.warn("No se pudo leer la preferencia del tema.", error);
+      }
+      applyTheme(savedTheme);
+
+      themeToggleBtn.addEventListener("click", () => {
+        const nextTheme = document.body.classList.contains("light-mode") ? "dark" : "light";
+        applyTheme(nextTheme);
+      });
+
+      /* LÓGICA DE DESPLIEGUE HORIZONTAL EXTENDIDO */
+      const allSections = document.querySelectorAll(".section");
+
+      document.querySelectorAll(".section-toggle").forEach((toggle) => {
+        const label = toggle.dataset.label || "Mostrar";
+        toggle.addEventListener("click", () => {
+          const targetId = toggle.dataset.target;
+          const targetSection = document.getElementById(toggle.closest('.section').id);
+          const body = document.getElementById(targetId);
+          if (!body) return;
+
+          const isOpen = body.classList.contains("show");
+
+          if (!isOpen) {
+            body.classList.add("show");
+            targetSection.classList.add("is-expanded");
+            toggle.setAttribute("aria-expanded", "true");
+            toggle.innerHTML = 'Ocultar <span class="arrow">▸</span>';
+
+            allSections.forEach(sec => {
+              if (sec !== targetSection) {
+                sec.classList.add("is-hidden");
+              }
+            });
+
+            mainContainer.classList.add("is-expanded-mode");
+          } else {
+            body.classList.remove("show");
+            targetSection.classList.remove("is-expanded");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.innerHTML = label + ' <span class="arrow">▸</span>';
+
+            allSections.forEach(sec => {
+              sec.classList.remove("is-hidden");
+            });
+
+            mainContainer.classList.remove("is-expanded-mode");
+          }
+        });
+      });
+
+      /* FILTROS */
+      const setupFilter = (groupName, gridSelector) => {
+        const buttons = document.querySelectorAll(`.filters[data-group="${groupName}"] .filter-btn`);
+        const cards = document.querySelectorAll(`${gridSelector} .card`);
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+            buttons.forEach((b) => b.classList.remove("is-active"));
+            button.classList.add("is-active");
+            const filter = button.dataset.filter;
+            cards.forEach((card) => {
+              const matches = filter === "todos" || card.dataset.categoria === filter;
+              card.style.display = matches ? "block" : "none";
+            });
+          });
+        });
+      };
+
+      setupFilter("juegos", "#juegosGrid");
+      setupFilter("musica", "#musicaGrid");
+
+      /* FORMULARIO */
+      const contactForm = document.getElementById("contactForm");
+      const alertaBox = document.getElementById("alertaBox");
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const messageInput = document.getElementById("message");
+      const errorName = document.getElementById("errorName");
+      const errorEmail = document.getElementById("errorEmail");
+      const errorMessage = document.getElementById("errorMessage");
+
+      const showAlert = (message, type) => {
+        alertaBox.innerHTML = `<div class="alerta alerta--${type}" role="alert">${message}</div>`;
+      };
+
+      const clearFieldError = (input, errorSpan) => {
+        input.style.borderColor = "";
+        errorSpan.textContent = "";
+      };
+
+      const setFieldError = (input, errorSpan, message) => {
+        input.style.borderColor = "var(--neon-red)";
+        errorSpan.textContent = message;
+      };
+
+      nameInput.addEventListener("blur", () => {
+        const v = nameInput.value.trim();
+        if (!v) setFieldError(nameInput, errorName, "El nombre es obligatorio.");
+        else if (v.length < 2) setFieldError(nameInput, errorName, "Mínimo 2 caracteres.");
+        else clearFieldError(nameInput, errorName);
+      });
+
+      emailInput.addEventListener("blur", () => {
+        const v = emailInput.value.trim();
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!v) setFieldError(emailInput, errorEmail, "El email es obligatorio.");
+        else if (!regex.test(v)) setFieldError(emailInput, errorEmail, "Formato de email inválido.");
+        else clearFieldError(emailInput, errorEmail);
+      });
+
+      messageInput.addEventListener("blur", () => {
+        const v = messageInput.value.trim();
+        if (!v) setFieldError(messageInput, errorMessage, "El mensaje es obligatorio.");
+        else if (v.length < 10) setFieldError(messageInput, errorMessage, "Mínimo 10 caracteres.");
+        else clearFieldError(messageInput, errorMessage);
+      });
+
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let valid = true;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const message = messageInput.value.trim();
+
+        if (!name) { setFieldError(nameInput, errorName, "El nombre es obligatorio."); valid = false; }
+        else if (name.length < 2) { setFieldError(nameInput, errorName, "Mínimo 2 caracteres."); valid = false; }
+        else clearFieldError(nameInput, errorName);
+
+        if (!email) { setFieldError(emailInput, errorEmail, "El email es obligatorio."); valid = false; }
+        else if (!emailRegex.test(email)) { setFieldError(emailInput, errorEmail, "Formato de email inválido."); valid = false; }
+        else clearFieldError(emailInput, errorEmail);
+
+        if (!message) { setFieldError(messageInput, errorMessage, "El mensaje es obligatorio."); valid = false; }
+        else if (message.length < 10) { setFieldError(messageInput, errorMessage, "Mínimo 10 caracteres."); valid = false; }
+        else clearFieldError(messageInput, errorMessage);
+
+        if (!valid) {
+          showAlert("⚠️ Revisa los campos marcados en rojo.", "error");
+          return;
+        }
+
+        showAlert(`✅ ¡Gracias, ${name}! Tu mensaje se ha enviado correctamente.`, "success");
+        contactForm.reset();
+        setTimeout(() => { alertaBox.innerHTML = ""; }, 6000);
+      });
+    });
+  </script>
+</body>
+</html>
